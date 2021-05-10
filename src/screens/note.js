@@ -4,7 +4,7 @@ import styled from 'styled-components/native';
 import { useQuery, gql } from '@apollo/client';
 
 import Note from '../components/Note';
-
+import Loading from '../components/Loading'
 
 const StyledView = styled.View`
     flex: 1;
@@ -43,7 +43,7 @@ const NoteScreen = props => {
   const id = props.navigation.getParam('id')  
   const { data, loading, error } = useQuery(GET_NOTE, {variables: {id}});
 
-  if (loading) return <Text>Loading...</Text>
+  if (loading) return <Loading />
   if (error) return <Text>Error!</Text>
 
   return (
