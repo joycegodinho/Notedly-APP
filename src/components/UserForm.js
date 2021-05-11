@@ -33,7 +33,14 @@ const UserForm = props => {
     const [email, setEmail] = useState();
     const [password, setPassword ] = useState();
 
-    const handleSubmit = () => {}
+    const handleSubmit = () => {
+        props.action({
+            variables: {
+                email: email,
+                password: password 
+            }
+        })
+    }
 
     return (
         <FormView>

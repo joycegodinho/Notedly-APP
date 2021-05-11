@@ -1,31 +1,40 @@
 import React from 'react';
-import { Text, View, Image } from 'react-native';
+import { Text, View, Button } from 'react-native';
+import { useQuery, gql } from '@apollo/client'
 import styled from 'styled-components/native';
 
-const StyledView = styled.View`
-    flex: 1;
-    justify-content: center;
-    align-items: center;
-`
+import NoteFeed from '../components/NoteFeed';
+import Loading from '../components/Loading';
 
-const H1 = styled.Text`
-    font-size: 48px;
-    font-weight: bold;
-`
-const P = styled.Text`
-    margin: 24px 0;
-    font-size: 18px;
-    
-`
+const GET_MY_FAVORITES = gql`
+    query me {
+        me {
+            id 
+            username
+            favorites {
+                id 
+                createdAt
+                content
+                favoriteCount
+                author {
+                    username
+                    id
+                }
+            }
+        }
+    }
+`;
 
+const Favorites = props => {
+  const { data, loading, error } = useQuery(GET_MY_FAVORITES);
 
-const Favorites = () => {
-  return (
-    <StyledView>
-      <H1>Favorites</H1>
-      <P>This is my favorites</P>
-    </StyledView>
-  );
+  if (loading) return <Loading />
+  if (error) return <Text>Error!</Text>
+  if(data.me.favorites.length !== 0) {
+    return <NoteFeed notes={data.me.favorites} navigation={props.navigation}/>
+} else {
+    return <Text>No notes yet</Text>
+}
 };
 Favorites.navigationOptions = {
   title: 'Favorites'

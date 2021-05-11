@@ -11,6 +11,7 @@
     "@apollo/client": "^3.3.16",
     "@react-native-community/masked-view": "0.1.10",
     "@react-navigation/native": "^5.9.4",
+    "apollo-link-context": "^1.0.20",
     "date-fns": "^2.21.3",
     "expo": "~41.0.1",
     "expo-secure-store": "^10.1.0",

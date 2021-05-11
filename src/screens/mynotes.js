@@ -1,31 +1,43 @@
 import React from 'react';
-import { Text, View, Image } from 'react-native';
+import { Text, View, Button } from 'react-native';
+import { useQuery, gql } from '@apollo/client'
 import styled from 'styled-components/native';
 
-const StyledView = styled.View`
-    flex: 1;
-    justify-content: center;
-    align-items: center;
-`
-
-const H1 = styled.Text`
-    font-size: 48px;
-    font-weight: bold;
-`
-const P = styled.Text`
-    margin: 24px 0;
-    font-size: 18px;
-    
-`
+import NoteFeed from '../components/NoteFeed';
+import Loading from '../components/Loading';
 
 
-const MyNotes = () => {
-  return (
-    <StyledView>
-      <H1>My Notes</H1>
-      <P>This is my notes</P>
-    </StyledView>
-  );
+const GET_MY_NOTES = gql`
+    query me {
+        me {
+            id 
+            username
+            notes {
+                id 
+                createdAt
+                content
+                favoriteCount
+                author {
+                    username
+                    id
+                }
+            }
+        }
+    }
+`;
+
+
+const MyNotes = props => {
+  const { data, loading, error } = useQuery(GET_MY_NOTES);
+
+  if (loading) return <Loading />
+  if (error) return <Text>Error!</Text>
+  if(data.me.notes.length !== 0) {
+    return <NoteFeed notes={data.me.notes} navigation={props.navigation}/>
+} else {
+    return <Text>No notes yet</Text>
+}
+
 };
 
 MyNotes.navigationOptions = {
