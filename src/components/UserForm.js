@@ -80,6 +80,7 @@ const UserForm = props => {
                        value={password} 
                        textContentType="password"
                        secureTextEntry={true}
+                       autoCapitalize="none"
             />
 
             <FormButton onPress={handleSubmit}>

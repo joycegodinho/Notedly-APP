@@ -1,6 +1,7 @@
 import React from 'react';
-import { FlatList, View, TouchableOpacity } from 'react-native';
+import { FlatList, View, TouchableOpacity, Text } from 'react-native';
 import styled from 'styled-components/native';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 import Note from './Note';
 
@@ -16,6 +17,20 @@ const notes = [
     { id: 8, content: 'note 08'},
     { id: 9, content: 'note 09'}
 ];
+
+const AddButtom = styled.TouchableOpacity`
+    border-width: 1px;
+    border-color: rgba(0,0,0,0.2);
+    justify-content: center;
+    align-items: center;
+    width: 70px;
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    height: 70px;
+    background-color: #fff;
+    border-radius: 100px;
+`
 
 const FeedView = styled.View`
     height: 100px;
@@ -49,6 +64,16 @@ const NoteFeed = props => {
 
                 )}
             />
+            {props.title === 'Feed' && (
+                <AddButtom
+                    onPress={() => 
+                    props.navigation.navigate('New')
+                    }
+                >
+                    <MaterialCommunityIcons name="plus" size={48}/>
+                </AddButtom>
+            )}
+
         </View>
         )
 };

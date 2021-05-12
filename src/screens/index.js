@@ -12,7 +12,8 @@ import NoteScreen from './note';
 import AuthLoading from './authloading';
 import SignIn from './signin';
 import SignUp from './signup';
-import Settings from './settings'
+import Settings from './settings';
+import New from './newnote';
 
 // Navigation Stack
 const AuthStack = createStackNavigator({
@@ -22,7 +23,8 @@ const AuthStack = createStackNavigator({
 
 const FeedStack = createStackNavigator({
     Feed: Feed,
-    Note: NoteScreen
+    Note: NoteScreen,
+    New: New
 });
 
 const MyStack = createStackNavigator({

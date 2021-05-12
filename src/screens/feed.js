@@ -1,10 +1,12 @@
 import React from 'react';
-import { Text, View, Button } from 'react-native';
+import { Text, View, Button, TouchableOpacity } from 'react-native';
 import { useQuery, gql } from '@apollo/client'
 import styled from 'styled-components/native';
 
 import NoteFeed from '../components/NoteFeed';
 import Loading from '../components/Loading';
+
+
 
 const GET_NOTES = gql`
     query notes {
@@ -29,7 +31,9 @@ const Feed = props => {
   if (loading) return <Loading />
   if (error) return <Text>Error!</Text>
   return (
-    <NoteFeed notes={data.notes} navigation={props.navigation} />
+    <NoteFeed notes={data.notes} title="Feed" navigation={props.navigation} />
+    
+
   );
 };
 
