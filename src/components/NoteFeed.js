@@ -5,6 +5,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { gql, useQuery, useMutation } from '@apollo/client';
 
 import Note from './Note';
+import FavoriteNote from './FavoriteNote'
 
 const GET_ME = gql`
   query me {
@@ -77,7 +78,7 @@ const NoteFeed = props => {
                                 >
                                     <Text>Note</Text>
                                 </TouchableOpacity>
-                                
+
                                 {data.me.id === item.author.id && (
                                     <TouchableOpacity
                                         onPress={() => 
@@ -87,6 +88,10 @@ const NoteFeed = props => {
                                         <Text>Edit</Text>
                                     </TouchableOpacity>
                                 )}
+
+                                {data.me.id ? (
+                                <FavoriteNote me={data.me} noteId={item.id} favoriteCount={item.favoriteCount} />
+                                ) : null}
                         </FeedView>
                     
 
