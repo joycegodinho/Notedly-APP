@@ -57,6 +57,15 @@ const Separator = styled.View`
     background-color: #ced0ce
 `
 
+const LinkOptions = styled.View`
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 25%;
+    margin-left:10px
+     
+`;
+
 const NoteFeed = props => {
     const { loading, error, data } = useQuery(GET_ME);
     if (loading) return <Text>Loading...</Text>
@@ -71,27 +80,32 @@ const NoteFeed = props => {
 
                         <FeedView>
                             <Note note={item} />
+
+                            <LinkOptions>
                                 <TouchableOpacity
                                     onPress={() => 
                                         props.navigation.navigate('Note', { id: item.id })
                                     }
                                 >
-                                    <Text>Note</Text>
+                                    <MaterialCommunityIcons name="note-text-outline" size={18}/>
                                 </TouchableOpacity>
 
-                                {data.me.id === item.author.id && (
+                                {data.me.id === item.author.id ? (
                                     <TouchableOpacity
                                         onPress={() => 
                                             props.navigation.navigate('Edit', { id: item.id })
                                         } 
                                     >
-                                        <Text>Edit</Text>
+                                        <MaterialCommunityIcons name="pencil-outline" size={18}/>
                                     </TouchableOpacity>
-                                )}
+                                ): null}
 
                                 {data.me.id ? (
                                 <FavoriteNote me={data.me} noteId={item.id} favoriteCount={item.favoriteCount} />
-                                ) : null}
+                                ) : null}                            
+                            
+                            </LinkOptions>
+
                         </FeedView>
                     
 

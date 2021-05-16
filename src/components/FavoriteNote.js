@@ -1,5 +1,5 @@
 import React, {  useState } from 'react';
-import { FlatList, View, TouchableOpacity, Text } from 'react-native';
+import { View, TouchableOpacity, Text } from 'react-native';
 import styled from 'styled-components/native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { gql, useQuery, useMutation } from '@apollo/client';
@@ -21,9 +21,9 @@ const FavoriteNote =  props => {
     return(
         <View>
             {favorited ? (
-                <TouchableOpacity onPress={() => {toggleFavorite(); setFavorited(false); setCount(count - 1)}}><Text> favorited </Text></TouchableOpacity>
+                <TouchableOpacity onPress={() => {toggleFavorite(); setFavorited(false); setCount(count - 1)}}><Text><MaterialCommunityIcons name="heart" size={16}/>{count}</Text></TouchableOpacity>
             ) : (
-                <TouchableOpacity onPress={() => {toggleFavorite(); setFavorited(true); setCount(count + 1)}}><Text> unfavorited  </Text></TouchableOpacity>
+                <TouchableOpacity onPress={() => {toggleFavorite(); setFavorited(true); setCount(count + 1)}}><Text><MaterialCommunityIcons name="heart-outline" size={16}/>{count}</Text></TouchableOpacity>
             )}
     
         </View>
