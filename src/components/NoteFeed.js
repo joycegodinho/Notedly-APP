@@ -2,8 +2,20 @@ import React from 'react';
 import { FlatList, View, TouchableOpacity, Text } from 'react-native';
 import styled from 'styled-components/native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { gql, useQuery, useMutation } from '@apollo/client';
 
 import Note from './Note';
+
+const GET_ME = gql`
+  query me {
+    me {
+      id
+      favorites {
+        id
+      }
+    }
+  }
+`;
 
 const notes = [
     { id: 0, content: 'note 00'},
@@ -45,6 +57,9 @@ const Separator = styled.View`
 `
 
 const NoteFeed = props => {
+    const { loading, error, data } = useQuery(GET_ME);
+    if (loading) return <Text>Loading...</Text>
+    if(error) return <Text>Error</Text>
     return (
         <View>
             <FlatList 
@@ -52,15 +67,28 @@ const NoteFeed = props => {
                 keyExtractor={({ id }) => id.toString()}
                 ItemSeparatorComponent={() => <Separator />}
                 renderItem={({ item }) => (
-                    <TouchableOpacity
-                        onPress={() => 
-                            props.navigation.navigate('Note', { id: item.id })
-                        }
-                    >
+
                         <FeedView>
                             <Note note={item} />
+                                <TouchableOpacity
+                                    onPress={() => 
+                                        props.navigation.navigate('Note', { id: item.id })
+                                    }
+                                >
+                                    <Text>Note</Text>
+                                </TouchableOpacity>
+                                
+                                {data.me.id === item.author.id && (
+                                    <TouchableOpacity
+                                        onPress={() => 
+                                            props.navigation.navigate('Edit', { id: item.id })
+                                        } 
+                                    >
+                                        <Text>Edit</Text>
+                                    </TouchableOpacity>
+                                )}
                         </FeedView>
-                    </TouchableOpacity>
+                    
 
                 )}
             />

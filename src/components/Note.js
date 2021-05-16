@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScrollView, Text } from 'react-native';
+import { ScrollView, Text, TouchableOpacity } from 'react-native';
 import styled from 'styled-components/native';
 import Markdown from 'react-native-markdown-renderer';
 import { format } from 'date-fns';
@@ -17,6 +17,7 @@ const Note = ({ note }) => {
                 {format(new Date(note.createdAt), 'H:mm MM/dd/yyyy')}
             </Text>
             <Markdown>{note.content}</Markdown>
+
         </NoteView>
     )
 }
