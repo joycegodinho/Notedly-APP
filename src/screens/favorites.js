@@ -33,7 +33,7 @@ const Favorites = props => {
 
   const [refreshing, setRefreshing] = useState(false);
   
-  const onRefresh = () => {
+  const onRefresh =  () => {
         setRefreshing(true);
         wait(3000).then(() => setRefreshing(false));     
       };

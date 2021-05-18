@@ -5,7 +5,8 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { gql, useQuery, useMutation } from '@apollo/client';
 
 import Note from './Note';
-import FavoriteNote from './FavoriteNote'
+import FavoriteNote from './FavoriteNote';
+import DeleteNote from './DeleteNote'
 
 const GET_ME = gql`
   query me {
@@ -61,38 +62,20 @@ const LinkOptions = styled.View`
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    width: 25%;
+    width: 35%;
     margin-left:10px
      
 `;
 
-const wait = (timeout) => {
-    return new Promise(resolve => setTimeout(resolve, timeout));
-  }
 
 const NoteFeed = props => {
-
-    const [refreshing, setRefreshing] = useState(false);
-
-    const onRefresh = useCallback(() => {
-      setRefreshing(true);
-      wait(3000).then(() => setRefreshing(false));
-      
-    }, [refreshing]);
-
 
     const { loading, error, data } = useQuery(GET_ME);
     if (loading) return <Text>Loading...</Text>
     if(error) return <Text>Error</Text>
 
-
-
     return (
-
-    
         <View>
-
-
             <FlatList 
                 data={props.notes}
                 keyExtractor={({ id }) => id.toString()}
@@ -122,14 +105,17 @@ const NoteFeed = props => {
                                     </TouchableOpacity>
                                 ): null}
 
+                                {data.me.id === item.author.id ? (
+                                    <DeleteNote noteId={item.id} navigation={props.navigation} />
+                                ): null}
+
                                 {data.me.id && props.title !== 'Favorites' ? (
                                 <FavoriteNote me={data.me} noteId={item.id} favoriteCount={item.favoriteCount} />
                                 ) : null}                            
                             
                             </LinkOptions>
 
-                        </FeedView>
-                    
+                        </FeedView> 
 
                 )}
 
