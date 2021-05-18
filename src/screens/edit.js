@@ -23,10 +23,46 @@ const EDIT_NOTE = gql`
   }
 `;
 
+const GET_NOTES = gql`
+    query notes {
+        notes {
+            id
+            createdAt
+            content
+            favoriteCount 
+            author {
+                username
+                id
+            }
+        }
+    }
+`;
+
+const GET_MY_NOTES = gql`
+    query me {
+        me {
+            id 
+            username
+            notes {
+                id 
+                createdAt
+                content
+                favoriteCount
+                author {
+                    username
+                    id
+                }
+            }
+        }
+    }
+`;
+
 
 const EditNote = props => {
     const id = props.navigation.getParam('id');
-    const [data, { loading, error }] = useMutation(EDIT_NOTE, { variables: { id }});
+    const [data, { loading, error }] = useMutation(EDIT_NOTE, { variables: { id },
+        refetchQueries: [{ query: GET_MY_NOTES },{ query: GET_NOTES}] 
+      });
     if(loading) return <Loading />
     return (
     <React.Fragment>

@@ -13,10 +13,34 @@ const TOGGLE_FAVORITE = gql`
   }
 `;
 
+
+const GET_MY_FAVORITES = gql`
+    query me {
+        me {
+            id 
+            username
+            favorites {
+                id 
+                createdAt
+                content
+                favoriteCount
+                author {
+                    username
+                    id
+                }
+            }
+        }
+    }
+`;
+
+
+
 const FavoriteNote =  props => {
     const [count, setCount] = useState(props.favoriteCount);
     const [favorited, setFavorited] = useState(props.me.favorites.filter(note => note.id === props.noteId).length > 0);
-    const [toggleFavorite] = useMutation(TOGGLE_FAVORITE, {variables: {id: props.noteId} });
+    const [toggleFavorite] = useMutation(TOGGLE_FAVORITE, {variables: {id: props.noteId}, 
+      refetchQueries: [{ query: GET_MY_FAVORITES}] 
+    });
 
     return(
         <View>

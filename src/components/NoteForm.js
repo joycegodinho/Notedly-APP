@@ -45,7 +45,6 @@ const NoteForm = props => {
                        value={content} 
                                                 
             />
-            
             <FormButton onPress={handleSubmit}>
                 <ButtonText>Submit</ButtonText>
             </FormButton>

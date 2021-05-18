@@ -1,5 +1,5 @@
-import React from 'react';
-import { FlatList, View, TouchableOpacity, Text } from 'react-native';
+import React, { useState, useCallback } from 'react';
+import { RefreshControl, SafeAreaView, ScrollView, FlatList, StyleSheet, View, TouchableOpacity, Text } from 'react-native';
 import styled from 'styled-components/native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { gql, useQuery, useMutation } from '@apollo/client';
@@ -66,16 +66,38 @@ const LinkOptions = styled.View`
      
 `;
 
+const wait = (timeout) => {
+    return new Promise(resolve => setTimeout(resolve, timeout));
+  }
+
 const NoteFeed = props => {
+
+    const [refreshing, setRefreshing] = useState(false);
+
+    const onRefresh = useCallback(() => {
+      setRefreshing(true);
+      wait(3000).then(() => setRefreshing(false));
+      
+    }, [refreshing]);
+
+
     const { loading, error, data } = useQuery(GET_ME);
     if (loading) return <Text>Loading...</Text>
     if(error) return <Text>Error</Text>
+
+
+
     return (
+
+    
         <View>
+
+
             <FlatList 
                 data={props.notes}
                 keyExtractor={({ id }) => id.toString()}
                 ItemSeparatorComponent={() => <Separator />}
+
                 renderItem={({ item }) => (
 
                         <FeedView>
@@ -100,7 +122,7 @@ const NoteFeed = props => {
                                     </TouchableOpacity>
                                 ): null}
 
-                                {data.me.id ? (
+                                {data.me.id && props.title !== 'Favorites' ? (
                                 <FavoriteNote me={data.me} noteId={item.id} favoriteCount={item.favoriteCount} />
                                 ) : null}                            
                             
@@ -110,7 +132,10 @@ const NoteFeed = props => {
                     
 
                 )}
+
             />
+         
+         
             {props.title === 'Feed' && (
                 <AddButtom
                     onPress={() => 
@@ -120,10 +145,24 @@ const NoteFeed = props => {
                     <MaterialCommunityIcons name="plus" size={48}/>
                 </AddButtom>
             )}
-
+  
         </View>
         )
 };
+
+const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      marginTop: 100
+    },
+    scrollView: {
+      flex: 1,
+      backgroundColor: 'pink',
+      
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+});
 
 
 export default NoteFeed;
