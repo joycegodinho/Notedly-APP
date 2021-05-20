@@ -39,8 +39,8 @@ const AddButtom = styled.TouchableOpacity`
     align-items: center;
     width: 70px;
     position: absolute;
-    bottom: 10px;
-    right: 10px;
+    bottom: 30px;
+    right: -35px;
     height: 70px;
     background-color: #fff;
     border-radius: 100px;
@@ -92,7 +92,7 @@ const NoteFeed = props => {
                                         props.navigation.navigate('Note', { id: item.id })
                                     }
                                 >
-                                    <MaterialCommunityIcons name="note-text-outline" size={18}/>
+                                    <MaterialCommunityIcons name="note-outline" size={18}/>
                                 </TouchableOpacity>
 
                                 {data.me.id === item.author.id ? (

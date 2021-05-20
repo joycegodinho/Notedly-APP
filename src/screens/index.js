@@ -60,7 +60,7 @@ const TabNavigator = createBottomTabNavigator({
         navigationOptions: {
             tabBarLabel: 'My Notes',
             tabBarIcon: ({ tintColor }) => (
-                <MaterialCommunityIcons name="notebook" size={24} color={tintColor} />
+                <MaterialCommunityIcons name="note-multiple" size={18} color={tintColor} />
             )
         }
     },

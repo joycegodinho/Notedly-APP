@@ -40,7 +40,7 @@ const Feed = props => {
   };
   
   const { data, loading, error, refetch } = useQuery(GET_NOTES);
-  if (loading) return <Loading />
+
   if (error) return <Text>Error!</Text>
   return (
          

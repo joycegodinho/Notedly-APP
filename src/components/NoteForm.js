@@ -66,9 +66,7 @@ const NoteForm = props => {
                 />
             ):(
                 <StyledInput onChangeText={setContent} 
-                    value={content}
-                   
-                                         
+                    value={content}                    
                 />
             )}
 
