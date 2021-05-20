@@ -57,17 +57,18 @@ const GET_MY_NOTES = gql`
     }
 `;
 
-
 const EditNote = props => {
     const id = props.navigation.getParam('id');
-    const [data, { loading, error }] = useMutation(EDIT_NOTE, { variables: { id },
+    
+    const [editNote, { loading, error }] = useMutation(EDIT_NOTE, { variables: { id },
         refetchQueries: [{ query: GET_MY_NOTES },{ query: GET_NOTES}] 
-      });
+    });
+    
     if(loading) return <Loading />
     return (
     <React.Fragment>
         {error && <Text>Error!</Text>}
-        <NoteForm action={data} navigation={props.navigation} />
+        <NoteForm action={editNote} id={id} formType='Edit' navigation={props.navigation} />
     </React.Fragment>
     )
 }

@@ -1,7 +1,7 @@
 import React, {  useState } from 'react';
 import { Text, View, Button, TextInput, TouchableOpacity } from 'react-native';
 import styled from 'styled-components/native';
-
+import { gql, useQuery, useMutation } from '@apollo/client';
 const FormView = styled.View`
     padding: 10px;
 `;
@@ -25,10 +25,27 @@ const ButtonText = styled.Text`
     font-size: 18px;
     font-weight: bold;
 `
+
+const GET_NOTE = gql`
+    query note($id: ID!) {
+        note(id: $id) {
+            id
+            createdAt
+            content
+            favoriteCount 
+            author {
+                username
+                id
+            }
+        }
+    }
+`;
+
 const NoteForm = props => {
-
+    const id = props.id
+    const { loading, error, data } = useQuery(GET_NOTE, { variables: { id }});
     const [content, setContent] = useState();
-
+    
 
     const handleSubmit = () => {
         props.action({
@@ -41,10 +58,20 @@ const NoteForm = props => {
 
     return (
         <FormView>
-            <StyledInput onChangeText={text => setContent(text)} 
-                       value={content} 
-                                                
-            />
+            {props.formType ==='Edit' ? (
+                <StyledInput onChangeText={setContent} 
+                    value={content}
+                    defaultValue={data.note.content.toString()}
+                                     
+                />
+            ):(
+                <StyledInput onChangeText={setContent} 
+                    value={content}
+                   
+                                         
+                />
+            )}
+
             <FormButton onPress={handleSubmit}>
                 <ButtonText>Submit</ButtonText>
             </FormButton>
