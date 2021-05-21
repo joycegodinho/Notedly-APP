@@ -26,20 +26,25 @@ const GET_NOTES = gql`
 const wait = (timeout) => {
   return new Promise(resolve => setTimeout(resolve, timeout));
 }
+
+
+
+
 const Feed = props => {
 
+  const { data, loading, error, refetch } = useQuery(GET_NOTES); 
+
   const [refreshing, setRefreshing] = useState(false);
-  
+   
   
   const onRefresh = () => {
-    
-    
     setRefreshing(true);
     wait(3000).then(() => setRefreshing(false));
      
   };
   
-  const { data, loading, error, refetch } = useQuery(GET_NOTES);
+
+  console.log(error)
 
   if (error) return <Text>Error!</Text>
   return (
@@ -69,7 +74,7 @@ const styles = StyleSheet.create({
   },
   scrollView: {
     flex: 1,
-    backgroundColor: 'pink',
+    backgroundColor: "#FFFFFF",
     
     alignItems: 'center',
     justifyContent: 'center',

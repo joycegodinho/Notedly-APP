@@ -33,9 +33,14 @@ const GET_MY_FAVORITES = gql`
     }
 `;
 
+const StyledText = styled.Text`
+    color: #616161
+`
+
 
 
 const FavoriteNote =  props => {
+    
     const [count, setCount] = useState(props.favoriteCount);
     const [favorited, setFavorited] = useState(props.me.favorites.filter(note => note.id === props.noteId).length > 0);
     const [toggleFavorite] = useMutation(TOGGLE_FAVORITE, {variables: {id: props.noteId}, 
@@ -45,9 +50,9 @@ const FavoriteNote =  props => {
     return(
         <View>
             {favorited ? (
-                <TouchableOpacity onPress={() => {toggleFavorite(); setFavorited(false); setCount(count - 1)}}><Text><MaterialCommunityIcons name="heart" size={16}/>{count}</Text></TouchableOpacity>
+                <TouchableOpacity onPress={() => {toggleFavorite(); setFavorited(false); setCount(count - 1)}}><StyledText><MaterialCommunityIcons color='#616161' name="heart" size={16}/>{count}</StyledText></TouchableOpacity>
             ) : (
-                <TouchableOpacity onPress={() => {toggleFavorite(); setFavorited(true); setCount(count + 1)}}><Text><MaterialCommunityIcons name="heart-outline" size={16}/>{count}</Text></TouchableOpacity>
+                <TouchableOpacity onPress={() => {toggleFavorite(); setFavorited(true); setCount(count + 1)}}><StyledText><MaterialCommunityIcons color='#616161' name="heart-outline" size={16}/>{count}</StyledText></TouchableOpacity>
             )}
     
         </View>

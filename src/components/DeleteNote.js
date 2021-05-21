@@ -62,7 +62,7 @@ const DeleteNote = props => {
         onPress={() => {deleteNote(); props.navigation.navigate('MyNotes')}
         } 
     >
-        <MaterialCommunityIcons name="circle-off-outline" size={17}/>
+        <MaterialCommunityIcons color='#616161' name="circle-off-outline" size={17}/>
     </TouchableOpacity>
   )
 };

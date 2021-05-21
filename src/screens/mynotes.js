@@ -34,13 +34,14 @@ const wait = (timeout) => {
 const MyNotes = props => {
 
   const [refreshing, setRefreshing] = useState(false);
-  
+  const { data, loading, error } = useQuery(GET_MY_NOTES);
+    
   const onRefresh = () => {
       setRefreshing(true);
       wait(3000).then(() => setRefreshing(false));     
     };
     
-  const { data, loading, error } = useQuery(GET_MY_NOTES);
+
 
   if (loading) return <Loading />
   if (error) return <Text>Error!</Text>
@@ -71,7 +72,7 @@ const styles = StyleSheet.create({
     },
     scrollView: {
       flex: 1,
-      backgroundColor: 'pink',
+      backgroundColor: '#FFFFFF',
       
       alignItems: 'center',
       justifyContent: 'center',

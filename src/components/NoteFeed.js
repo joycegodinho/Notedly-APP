@@ -40,7 +40,7 @@ const AddButtom = styled.TouchableOpacity`
     width: 70px;
     position: absolute;
     bottom: 30px;
-    right: -35px;
+    right: 10px;
     height: 70px;
     background-color: #fff;
     border-radius: 100px;
@@ -63,7 +63,9 @@ const LinkOptions = styled.View`
     flex-direction: row;
     justify-content: space-between;
     width: 35%;
-    margin-left:10px
+    margin-left:80px;
+    color: #616161;
+    
      
 `;
 
@@ -87,12 +89,12 @@ const NoteFeed = props => {
                             <Note note={item} />
 
                             <LinkOptions>
-                                <TouchableOpacity
+                                <TouchableOpacity 
                                     onPress={() => 
                                         props.navigation.navigate('Note', { id: item.id })
                                     }
                                 >
-                                    <MaterialCommunityIcons name="note-outline" size={18}/>
+                                    <MaterialCommunityIcons color='#616161' name="note-outline" size={18}/>
                                 </TouchableOpacity>
 
                                 {data.me.id === item.author.id ? (
@@ -101,7 +103,7 @@ const NoteFeed = props => {
                                             props.navigation.navigate('Edit', { id: item.id })
                                         } 
                                     >
-                                        <MaterialCommunityIcons name="pencil-outline" size={18}/>
+                                        <MaterialCommunityIcons color='#616161' name="pencil-outline" size={18}/>
                                     </TouchableOpacity>
                                 ): null}
 
