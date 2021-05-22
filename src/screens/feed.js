@@ -6,9 +6,6 @@ import styled from 'styled-components/native';
 import NoteFeed from '../components/NoteFeed';
 import Loading from '../components/Loading';
 
-
-
-
 const GET_NOTES = gql`
     query notes {
         notes {
@@ -23,63 +20,17 @@ const GET_NOTES = gql`
         }
     }
 `;
-const wait = (timeout) => {
-  return new Promise(resolve => setTimeout(resolve, timeout));
-}
-
-
-
 
 const Feed = props => {
 
   const { data, loading, error, refetch } = useQuery(GET_NOTES); 
 
-  const [refreshing, setRefreshing] = useState(false);
-   
-  
-  const onRefresh = () => {
-    setRefreshing(true);
-    wait(3000).then(() => setRefreshing(false));
-     
-  };
-  
-
-  console.log(error)
-
+  if (loading) return <Loading />
   if (error) return <Text>Error!</Text>
-  return (
-         
-    <ScrollView
-      contentContainerStyle={styles.scrollView}
-      refreshControl={
-        <RefreshControl
-            refreshing={refreshing}
-            onRefresh={onRefresh}
-        />
-      }
-    >
- 
 
-    <NoteFeed notes={data.notes} title="Feed" navigation={props.navigation} />
-  
-        
-    </ScrollView>
-  );
+  return <NoteFeed notes={data.notes} title="Feed" navigation={props.navigation} />
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    marginTop: 100
-  },
-  scrollView: {
-    flex: 1,
-    backgroundColor: "#FFFFFF",
-    
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
 
 Feed.navigationOptions = {
   title: 'Feed'

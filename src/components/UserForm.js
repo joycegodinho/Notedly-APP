@@ -8,6 +8,7 @@ const FormView = styled.View`
 
 const StyledInput = styled.TextInput`
     border: 1px solid gray;
+    border-radius: 5px;
     font-size: 18px;
     padding: 8px;
     margin-bottom: 24px;
@@ -20,6 +21,7 @@ const FormButton = styled.TouchableOpacity`
     background: #0077cc;
     width: 100%;
     padding: 8px;
+    border-radius: 5px;
 `
 const ButtonText = styled.Text`
     text-align: center;
@@ -89,7 +91,8 @@ const UserForm = props => {
 
             {props.formType === 'signIn' && (
                 <SignUp onPress={() => props.navigation.navigate('SignUp')}>
-                    <Text>Need an account?</Text><Link>Sign Up</Link>
+                    <Text><Text>Need an account? </Text><Link>Sign Up</Link></Text>
+                    
                 </SignUp>
             )}
 

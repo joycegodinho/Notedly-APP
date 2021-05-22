@@ -25,56 +25,20 @@ const GET_MY_FAVORITES = gql`
     }
 `;
 
-const wait = (timeout) => {
-    return new Promise(resolve => setTimeout(resolve, timeout));
-  }
-
 const Favorites = props => {
 
-  const [refreshing, setRefreshing] = useState(false);
   const { data, loading, error } = useQuery(GET_MY_FAVORITES);
-  
-  const onRefresh =  () => {
-        setRefreshing(true);
-        wait(3000).then(() => setRefreshing(false));     
-      };
-  
 
   if (loading) return <Loading />
   if (error) return <Text>Error!</Text>
   if(data.me.favorites.length !== 0) {
     return (
-
-        <ScrollView
-            contentContainerStyle={styles.scrollView}
-            refreshControl={
-                <RefreshControl
-                    refreshing={refreshing}
-                    onRefresh={onRefresh}
-                />
-            }
-        >
-        <NoteFeed notes={data.me.favorites} title="Favorites" navigation={props.navigation}/>
-        </ScrollView>
+        <NoteFeed notes={data.me.favorites} title="Favorites" navigation={props.navigation}/>  
     )
 } else {
     return <Text>No notes yet</Text>
-}
-};
+}};
 
-const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      marginTop: 100
-    },
-    scrollView: {
-      flex: 1,
-      backgroundColor: '#FFFFFF',
-      
-      alignItems: 'center',
-      justifyContent: 'center',
-    },
-  });
 
 Favorites.navigationOptions = {
   title: 'Favorites'

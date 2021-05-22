@@ -33,17 +33,18 @@ const notes = [
 ];
 
 const AddButtom = styled.TouchableOpacity`
-    border-width: 1px;
-    border-color: rgba(0,0,0,0.2);
     justify-content: center;
     align-items: center;
-    width: 70px;
+    width: 55px;
     position: absolute;
     bottom: 30px;
-    right: 10px;
-    height: 70px;
-    background-color: #fff;
+    right: 15px;
+    height: 55px;
+    background-color: #82B7DC;
     border-radius: 100px;
+    elevation: 25;
+
+
 `
 
 const FeedView = styled.View`
@@ -62,15 +63,26 @@ const LinkOptions = styled.View`
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    width: 35%;
+    width: 30%;
     margin-left:80px;
     color: #616161;
     
      
 `;
 
+const wait = (timeout) => {
+    return new Promise(resolve => setTimeout(resolve, timeout));
+  }
 
 const NoteFeed = props => {
+
+    const [refreshing, setRefreshing] = useState(false);
+    
+      
+    const onRefresh = () => {
+        setRefreshing(true);
+        wait(3000).then(() => setRefreshing(false));     
+      };
 
     const { loading, error, data } = useQuery(GET_ME);
     if (loading) return <Text>Loading...</Text>
@@ -82,7 +94,8 @@ const NoteFeed = props => {
                 data={props.notes}
                 keyExtractor={({ id }) => id.toString()}
                 ItemSeparatorComponent={() => <Separator />}
-
+                refreshing={refreshing}
+                onRefresh={onRefresh}
                 renderItem={({ item }) => (
 
                         <FeedView>
@@ -130,27 +143,12 @@ const NoteFeed = props => {
                     props.navigation.navigate('New')
                     }
                 >
-                    <MaterialCommunityIcons name="plus" size={48}/>
+                    <MaterialCommunityIcons color='#FFFFFF' name="pencil-plus-outline" size={32}/>
                 </AddButtom>
             )}
   
         </View>
         )
 };
-
-const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      marginTop: 100
-    },
-    scrollView: {
-      flex: 1,
-      backgroundColor: 'pink',
-      
-      alignItems: 'center',
-      justifyContent: 'center',
-    },
-});
-
 
 export default NoteFeed;
