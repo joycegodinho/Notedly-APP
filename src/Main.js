@@ -29,19 +29,10 @@ const client = new ApolloClient ({
 
 import Screens from './screens'
 
-const wait = (timeout) => {
-  return new Promise(resolve => setTimeout(resolve, timeout));
-}
+
 
 const Main = () => {
 
-  const [refreshing, setRefreshing] = useState(false);
-
-  const onRefresh = useCallback(() => {
-    setRefreshing(true);
-    wait(3000).then(() => setRefreshing(false));
-    
-  }, []);
 
   return (
       <ApolloProvider client={client}>

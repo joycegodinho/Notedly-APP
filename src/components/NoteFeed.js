@@ -38,11 +38,17 @@ const AddButtom = styled.TouchableOpacity`
     width: 55px;
     position: absolute;
     bottom: 30px;
-    right: 15px;
+    right: 20px;
     height: 55px;
+
+    background-color: #82B7DC;
     background-color: #82B7DC;
     border-radius: 100px;
-    elevation: 25;
+    color: #000000;
+    border: 1px solid #B8B8B9;
+    elevation: 6;
+ 
+    
 
 
 `
@@ -51,6 +57,7 @@ const FeedView = styled.View`
     height: 100px;
     overflow: hidden;
     margin-bottom: 10px;
+    
 `;
 
 const Separator = styled.View`
@@ -67,7 +74,6 @@ const LinkOptions = styled.View`
     margin-left:80px;
     color: #616161;
     
-     
 `;
 
 const wait = (timeout) => {
@@ -102,14 +108,17 @@ const NoteFeed = props => {
                             <Note note={item} />
 
                             <LinkOptions>
-                                <TouchableOpacity 
-                                    onPress={() => 
-                                        props.navigation.navigate('Note', { id: item.id })
-                                    }
-                                >
-                                    <MaterialCommunityIcons color='#616161' name="note-outline" size={18}/>
-                                </TouchableOpacity>
 
+                                {data.me.id === item.author.id ? (
+                                    <TouchableOpacity 
+                                        onPress={() => 
+                                            props.navigation.navigate('Note', { id: item.id })
+                                        }
+                                    >
+                                        <MaterialCommunityIcons color='#616161' name="note-outline" size={18}/>
+                                    </TouchableOpacity>
+                                ): null}
+                                
                                 {data.me.id === item.author.id ? (
                                     <TouchableOpacity
                                         onPress={() => 

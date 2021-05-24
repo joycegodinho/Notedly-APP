@@ -15,7 +15,7 @@ const AuthLoading = props => {
         checkLoginState();
     })
     return (
-        <Loading />
+        <Text></Text>
     )
 };
 

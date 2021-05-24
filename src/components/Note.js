@@ -7,6 +7,7 @@ import { format } from 'date-fns';
 
 const NoteView = styled.ScrollView`
     padding: 10px;
+    color: #FFFFFF
 `
 
 
